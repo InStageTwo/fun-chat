@@ -2,7 +2,9 @@ import View from '../view';
 
 const CssClasses = {
     ITEM: 'header-item',
+    ITEM_SELECTED: 'header-item-selected',
 };
+
 
 interface LinkElementsMap {
     [key: string]: LinkView;
@@ -11,6 +13,7 @@ interface LinkElementsMap {
 interface Page {
     name: string;
     callback: () => void;
+
 }
 
 export default class LinkView extends View {
@@ -38,5 +41,17 @@ export default class LinkView extends View {
 
         const element = this.elementCreator.getElement();
 
+    }
+
+    setSelectedStatus() {
+        this.linkElements.forEach((linkElement) => linkElement.setNotSelectedStatus());
+
+        const element = this.elementCreator.getElement();
+        element.classList.add(CssClasses.ITEM_SELECTED);
+    }
+
+    setNotSelectedStatus() {
+        const element = this.elementCreator.getElement();
+        element.classList.remove(CssClasses.ITEM_SELECTED);
     }
 }

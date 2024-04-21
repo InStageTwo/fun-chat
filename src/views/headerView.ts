@@ -61,6 +61,11 @@ export default class HeaderView extends View {
     
     }
 
-    
+    setSelectedItem(namePage: string) {
+        const linkItem = this.headerLinkElements.get(namePage.toUpperCase());
+        if (linkItem instanceof LinkView) {
+            linkItem.setSelectedStatus();
+        }
+    }
 }
 
