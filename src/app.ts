@@ -5,23 +5,33 @@ import Router from "./router/router";
 import { Pages } from "./router/pages";
 import HeaderView from "./views/headerView";
 import ChatView from "./views/chatView";
+import View from './views/view';
+import NotFoundView from './notFoundView';
+
+interface Route {
+    path: string;
+    callback: (resource: string) => void;
+}
 
 export default class App {
     router: Router;
+    header: HeaderView | null;
+    chat: ChatView | null;
 
     constructor() {
         this.header = null;
         this.chat = null;
-        this.router = new Router(this.createRoutes());
+        const routes = this.createRoutes();
+        this.router = new Router(routes);
         this.createView();
     }
 
     createView(){
         this.header = new HeaderView(this.router);
         this.chat = new ChatView();
-        const login = new LoginView;
-        // const footer = new FooterView();
-        document.body.append(login.getElement() /*, footer.getHtmlElement()*/);
+        const login = new LoginView();
+        const footer = new FooterView();
+        document.body.append(login.getElement(), this.header.getHtmlElement(),this.chat.getHtmlElement(), footer.getHtmlElement());
         
     }
 
@@ -29,24 +39,40 @@ export default class App {
         return [
             {
                 path: ``,
-                callback:() => [],    
+                callback:() => {
+                    this.header!.setSelectedItem(Pages.CHAT);
+                    this.chat!.setContent(new ChatView());
+                },    
             },
             {
                 path: `${Pages.CHAT}`,
-                callback:() => [],    
+                callback:() => {
+                    this.setContent(Pages.CHAT, new ChatView())
+                },        
             },
             {
                 path: `${Pages.LOGIN}`,
-                callback:() => [],    
+                callback:() => {
+                    this.setContent(Pages.LOGIN, new LoginView());
+                },    
             },
+            //Not implemented yet
+            // {
+            //     path: `${Pages.ABOUT}`,
+            //     callback:() => {
+            //         this.setContent(Pages.ABOUT, new AboutView());
+            //     },     
+            // },
             {
-                path: `${Pages.ABOUT}`,
-                callback:() => [],    
+                callback:() => {
+                    this.setContent(Pages.NOT_FOUND, new NotFoundView());
+                },   
             },
-            {
-                path: `${Pages.NOT_FOUND}`,
-                callback:() => [],    
-            },
-        ]
+        ] as Route[]
+    }
+
+    setContent(page:string, view : View) {
+        this.header?.setSelectedItem(page);
+        this.chat?.setContent(view);
     }
 }

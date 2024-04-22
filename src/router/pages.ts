@@ -7,6 +7,5 @@ const Pages: {
     ABOUT: 'About Page',
 };
 
-const ID_SELECTOR = '{id}';
 
-export { Pages, ID_SELECTOR };
+export { Pages };

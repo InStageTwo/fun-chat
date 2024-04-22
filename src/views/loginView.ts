@@ -2,6 +2,7 @@ import  '../styles/loginView.css';
 import ElementCreator from '../utils/elementCreator';
 import View from './view';
 import Authenticator from '../controllers/loginController';
+import Router from '../router/router';
 
 const cssClasses ={
     login: 'login',
@@ -76,8 +77,22 @@ export default class LoginView extends View{
 
         const username = usernameInput.value;
         const password = passwordInput.value;
-
+        
         const authenticator = new Authenticator('ws://localhost:4000');
-
+        
+        authenticator.verifyCredentials(username, password)
+        .then((response) => {
+            if (response.success) {
+                // Переключение на страницу с HeaderView
+                const router = new Router(/* ваш массив маршрутов */);
+                router.navigate('/header');
+            } else {
+                // Обработка неверных учетных данных
+                console.log('Неверный логин или пароль');
+            }
+        })
+        .catch((error) => {
+            console.error('Ошибка верификации:', error);
+        });
     }
 }
