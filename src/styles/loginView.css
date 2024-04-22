@@ -1,0 +1,33 @@
+.submit-button {
+	cursor: pointer;
+	padding: 5px 15px;
+	background: var(--light-color);
+	color: var(--dark-color-a);
+	border: 0;
+	font-size: 17px;
+}
+
+.login-form{
+    max-width: 500px;
+	margin: 80px auto;
+	color: #fff;
+    text-align: center;
+	padding: 20px;
+	background: var(--dark-color-a);
+	border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    font-size: 17px;
+}
+
+.form-input {
+	font-size: 16px;
+	height: 40px;
+	width: 100%;
+    padding: 5px 15px;
+}
+
+.form-label {
+	display: block;
+}
